@@ -6,6 +6,10 @@ async function main() {
   const kakao_js_key = core.getInput("kakao_js_key");
 
   Kakao.init(kakao_js_key); // 사용하려는 앱의 JavaScript 키 입력
+  if (!Kakao.isInitialized()) {
+    console.error("Kakao.isInitialized failed");
+    return;
+  }
 
   const receiver_uuids = core.getInput("receiver_uuids");
   const template_id = core.getInput("template_id");
@@ -34,9 +38,12 @@ async function main() {
     }
   } else {
     console.log("Sending kakao talk message.");
-    Kakao.Share.sendCustom({
-      templateId: template_id,
-      templateArgs: JSON.parse(args_json),
+    return await Kakao.API.request({
+      url: "/v2/api/talk/memo/send",
+      data: {
+        template_id: template_id,
+        template_args: JSON.parse(args_json),
+      },
     });
   }
 }
