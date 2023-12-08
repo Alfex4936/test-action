@@ -1,0 +1,29 @@
+name: "KakaoTalk CI Action"
+author: "Seok Won <ikr@kakao.com>"
+
+description: "A Github action for KakaoTalk CI"
+
+inputs:
+  kakao_js_key:
+    description: "The KakaoTalk Javascript Key"
+    required: true
+  function_name:
+    description: "The function to execute (send_to_groups_custom or send_to_me_custom)"
+    required: true
+  template_id:
+    description: "The template ID for the message"
+    required: false
+  template_args:
+    description: "The template arguments for the message"
+    required: false
+  receiver_uuids:
+    description: "The receiver UUIDs for the message (only required for send_to_groups_custom)"
+    required: false
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "message-circle"
+  color: "yellow"

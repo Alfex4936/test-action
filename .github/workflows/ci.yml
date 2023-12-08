@@ -1,0 +1,21 @@
+name: Example CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Send KakaoTalk notification
+        uses: Alfex4936/test-action@main
+        with:
+          kakao_js_key: ${{ secrets.KAKAO_JS_KEY }}
+          template_id: 101722
+          template_args: '{"title": "Jacoco 테스트 완료", "desc": "Github Action에서 코드 커버리지를 완료했습니다."}'
